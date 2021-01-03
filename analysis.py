@@ -46,6 +46,33 @@ final_score_df = pd.DataFrame.from_dict(final_score_dict, orient='index',
                                         columns=['Year', 'Snatch',
                                              'Clean and Jerk',
                                              'Final Score'])
-print(final_score_df.sort_values(by=['Year','Final Score'], ascending=False))
+
+final_score_df.index.name = 'Athlete_id'
+
+
+#print(final_score_df.sort_values(by=['Year','Final Score'], ascending=False))
+
+#print(athletes)
+
+
+for index, row in final_score_df.iterrows():
+    athlete_info = athletes.loc[(athletes['id'] == index) & (athletes['year'] == row['Year'])]
+    #final_score_df.loc[final_score_df.index[index & row['Year']], 'Name'] = athlete_info['name']
+    #print(final_score_df.loc(index & row['Year']))
+    #print(final_score_df.loc[final_score_df.index[index & row['Year']], 'Name'])
+
+
+#merged = pd.merge(final_score_df, athletes, left_on='Athlete_id', right_on='id')
+merged = final_score_df.merge(athletes, how='left', left_on='Athlete_id', right_on='id').drop(columns=['year','height'])
+
+column_names = ['name','nation','bodyweight','birthdate','Year','Snatch','Clean and Jerk','Final Score']
+
+merged = merged.reindex(columns=column_names)
+
+print(merged.iloc[0])
+
+
+
+    
 
 
