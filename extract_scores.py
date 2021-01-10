@@ -3,7 +3,6 @@ import pandas as pd
 class Scores:
     
     def __init__(self, df):
-        
         self.df   = df
         
     def qualified_athletes(self):
@@ -18,7 +17,7 @@ class Scores:
         if self.df.empty:
             return
         else:
-            return self.df.loc[ self.df['lift'].idxmax() ]
+            return self.df.loc[self.df['lift'].idxmax()]
         
         
 
