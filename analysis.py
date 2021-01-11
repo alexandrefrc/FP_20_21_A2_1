@@ -1,3 +1,4 @@
+import datetime as dt
 import pandas as pd
 import matplotlib.pyplot as plt
 from extract_scores import Scores as sc
@@ -6,17 +7,18 @@ from extract_scores import Scores as sc
 athletes = pd.read_csv('athletes.csv')
 athletes['birthdate'] = athletes['birthdate'].astype('datetime64')
 sports_events = pd.read_csv('sports_events.csv')
-sports_events['year'] = sports_events['year'].astype('datetime64')
+sports_events['date'] = sports_events['date'].astype('datetime64')
 
-ages = {}
-for index, athlete in athletes.iterrows:
-    date_event = sports_events[sports_events['athlete_id']==athlete['id'] & sports_events['year']]
-    
+
 
 sports_events['qualified'] = sports_events['qualified'].astype(bool)
 # INCLUIR DROP NA NA CLASSE SCORES
 sports_events = sports_events.dropna()
 sports_events['lift_valid'] = sports_events['lift_valid'].astype(bool)
+
+sports_events['year'] = pd.DatetimeIndex(sports_events['date']).year
+
+complete_info_df = sports_events.merge(athletes, how='left', left_on='athlete_id', right_on='id')
 
 df_grouped = sports_events.groupby(['year', 'athlete_id', 'lift_type'])
 
@@ -31,22 +33,21 @@ results_grouped = results.groupby(['year', 'athlete_id'])
 final_score_dict = {}
 
 for key, group in results_grouped:
-    year = group.iloc[0, 0]
+    year = group.iloc[0, -1]
     athlete_id = group.iloc[0, 1]
+    bodyweight = group.iloc[0, 2]
     cj = float(group.iloc[0, -2])
     snatch = float(group.iloc[1, -2])
     final_score = cj + snatch
-    final_score_dict[(athlete_id, year)] = [snatch, cj, final_score]
+    final_score_dict[(athlete_id, year)] = [bodyweight, snatch, cj, final_score]
 
 final_score_df = pd.DataFrame.from_dict(final_score_dict, orient='index',
-                                        columns=['Snatch',
+                                        columns=['Bodyweight', 'Snatch',
                                                  'Clean and Jerk',
                                                  'Final Score'])
 final_score_df.index = pd.MultiIndex.from_tuples(final_score_df.index)
 final_score_df.index.names = ['Athlete_id', 'Year']
 
-complete_info_df = pd.merge(athletes, final_score_df, how='right', left_on=[
-                            'id', 'year'], right_on=['Athlete_id', 'Year']).drop(columns='height')
 complete_info_df.columns = ['Athlete_ID', 'Year', 'Name', 'Nation',
                             'Bodyweight', 'Birthdate', 'Snatch', 'Clean&Jerk', 'Score']
 complete_info_df = complete_info_df.sort_values(by='Score', ascending=False)

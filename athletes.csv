@@ -1,68 +1,55 @@
-id,year,name,nation,bodyweight,height,birthdate
-1,2016,Rim Jong-sim,north korea,74.47,163,05/02/1993
-2,2016,Darya Naumava,belarus,74.63,165,26/03/1995
-3,2016,Lidia Valentín,spain,74.00,169,10/02/1985
-4,2016,Ubaldina Valoyes,colombia,74.28,158,06/07/1982
-5,2016,Iryna Dekha,ukraine,74.89,174,14/05/1996
-6,2016,Jenny Arthur,usa,74.65,166,11/12/1993
-7,2016,María Fernanda Valdés,chile,74.66,162,11/03/1992
-8,2016,Gaëlle Nayo-Ketchanke,france,73.61,174,20/04/1988
-9,2016,Alejandra Garza,mexico,74.59,165,01/08/1991
-10,2016,Sona Poghosyan,armenia,72.52,158,29/06/1998
-11,2016,Mary Opeloge,samoa,74.56,152,24/01/1992
-12,2016,Natalia Prișcepa,moldova,73.72,168,17/10/1989
-13,2016,Assiya İpek,turkey,69.77,168,05/12/1993
-14,2016,Samira Ouass,morocco,73.68,162,22/04/1992
-15,2016,Jaqueline Ferreira,brazil,74.89,165,05/04/1987
-3,2012,Lidia Valentín,spain,74.39,169,10/02/1985
-16,2012,Abeer Abdelrahman,egypt,74.60,162,13/06/1992
-17,2012,Madias Nzesso,cameroon,74.55,164,20/04/1992
-18,2012,Ewa Mizdal,poland,70.58,160,18/07/1987
-15,2012,Jaqueline Ferreira,brazil,74.12,165,05/04/1987
-7,2012,María Fernanda Valdés,chile,74.70,162,11/03/1992
-19,2012,Lim Ji-hye,south korea,74.81,163,28/10/1985
-20,2012,Thuraia Sobh,syria,73.36,177,04/01/1986
-21,2012,Khadija Mohammed,united arab emirates,74.72,160,19/06/1995
-22,2012,Nadezhda Evstyukhina,russia,74.23,164,27/05/1988
-23,2012,Svetlana Podobedova,kazakhstan,74.58,165,25/05/1986
-24,2012,Natalya Zabolotnaya,russia,74.80,168,15/08/1985
-25,2012,Iryna Kulesha,belarus,74.95,163,26/06/1986
-26,2008,Alla Vazhenina ,kazakhstan,73.88,175,29/05/1983
-3,2008,Lidia Valentín,spain,74.42,169,10/02/1985
-27,2008,Damaris Aguirre,mexico,74.82,163,25/07/1977
-4,2008,Ubaldina Valoyes,colombia,73.30,158,06/07/1982
-28,2008,Jeane Lassen,canada,74.42,170,26/09/1980
-29,2008,Nadiya Myronyuk,ukraine,74.11,158,25/03/1984
-30,2008,Yuliya Novakovich,belarus,74.19,165,06/05/1989
-31,2008,Elizabeth Poblete,chile,74.43,160,28/09/1987
-32,2008,Cao Lei,china,73.16,168,24/12/1983
-22,2008,Nadezhda Evstyukhina,russia,73.33,164,27/05/1988
-25,2008,Iryna Kulesha,belarus,74.78,163,26/06/1986
-33,2008,Hripsime Khurshudyan,armenia,74.74,173,27/07/1987
-34,2004,Pawina Thongsuk,thailand,69.29,156,18/04/1979
-24,2004,Natalya Zabolotnaya,russia,74.09,168,15/08/1985
-35,2004,Valentina Popova,russia,72.89,164,25/09/1972
-36,2004,Gyöngyi Likerecz,hungary,74.19,172,28/05/1983
-37,2004,Christina Ioannidi,greece,73.31,163,04/01/1982
-38,2004,Tatyana Khromova,kazakhstan,74.51,173,26/02/1980
-39,2004,Kim Soon-hee,korea,74.25,165,21/02/1977
-40,2004,Tulia Medina,colombia,70.96,169,18/03/1983
-41,2004,Nora Köppel,argentina,73.01,175,19/05/1972
-42,2004,Wanda Rijo,dominican republic,74.56,170,26/11/1979
-43,2004,Eva Dimas,el salvador,74.31,167,18/03/1973
-27,2004,Damaris Aguirre,mexico,73.90,163,25/07/1977
-44,2004,Deborah Lovely,australia,74.71,170,20/06/1983
-45,2004,Marie Jesika Dalou,mauritius,74.12,163,27/07/1979
-46,2004,Nahla Ramadan,egypt,74.44,175,04/04/1985
-47,2004,Huang Shih-chun,taipei,73.84,160,30/11/1975
-48,2000,María Isabel Urrutia,colombia,73.28,170,25/03/1965
-49,2000,Ruth Ogbeifo,nigeria,74.20,161,18/04/1972
-50,2000,Kuo Yi-hang,taipei,74.52,166,02/06/1964
-39,2000,Kim Soon-hee,korea,73.84,165,21/02/1977
-36,2000,Gyöngyi Likerecz,hungary,74.16,172,28/05/1983
-51,2000,Svetlana Khabirova,russia,74.38,164,12/03/1978
-52,2000,Cara Heads,usa,72.64,160,07/10/1977
-42,2000,Wanda Rijo,dominican republin,73.74,170,26/11/1979
-53,2000,Mónica Carrió,spain,74.18,170,28/03/1977
-54,2000,Karoliina Lundahl,finland,74.36,171,30/06/1968
-38,2000,Tatyana Khromova,kazakhstan,74.68,173,26/02/1980
+id,name,nation,height,birthdate
+1,Rim Jong-sim,north korea,163,05/02/1993
+2,Darya Naumava,belarus,165,26/03/1995
+3,Lidia Valentín,spain,169,10/02/1985
+4,Ubaldina Valoyes,colombia,158,06/07/1982
+5,Iryna Dekha,ukraine,174,14/05/1996
+6,Jenny Arthur,usa,166,11/12/1993
+7,María Fernanda Valdés,chile,162,11/03/1992
+8,Gaëlle Nayo-Ketchanke,france,174,20/04/1988
+9,Alejandra Garza,mexico,165,01/08/1991
+10,Sona Poghosyan,armenia,158,29/06/1998
+11,Mary Opeloge,samoa,152,24/01/1992
+12,Natalia Prișcepa,moldova,168,17/10/1989
+13,Assiya İpek,turkey,168,05/12/1993
+14,Samira Ouass,morocco,162,22/04/1992
+15,Jaqueline Ferreira,brazil,165,05/04/1987
+16,Abeer Abdelrahman,egypt,162,13/06/1992
+17,Madias Nzesso,cameroon,164,20/04/1992
+18,Ewa Mizdal,poland,160,18/07/1987
+19,Lim Ji-hye,south korea,163,28/10/1985
+20,Thuraia Sobh,syria,177,04/01/1986
+21,Khadija Mohammed,united arab emirates,160,19/06/1995
+22,Nadezhda Evstyukhina,russia,164,27/05/1988
+23,Svetlana Podobedova,kazakhstan,165,25/05/1986
+24,Natalya Zabolotnaya,russia,168,15/08/1985
+25,Iryna Kulesha,belarus,163,26/06/1986
+26,Alla Vazhenina ,kazakhstan,175,29/05/1983
+27,Damaris Aguirre,mexico,163,25/07/1977
+28,Jeane Lassen,canada,170,26/09/1980
+29,Nadiya Myronyuk,ukraine,158,25/03/1984
+30,Yuliya Novakovich,belarus,165,06/05/1989
+31,Elizabeth Poblete,chile,160,28/09/1987
+32,Cao Lei,china,168,24/12/1983
+33,Hripsime Khurshudyan,armenia,173,27/07/1987
+34,Pawina Thongsuk,thailand,156,18/04/1979
+35,Valentina Popova,russia,164,25/09/1972
+36,Gyöngyi Likerecz,hungary,172,28/05/1983
+37,Christina Ioannidi,greece,163,04/01/1982
+38,Tatyana Khromova,kazakhstan,173,26/02/1980
+39,Kim Soon-hee,korea,165,21/02/1977
+40,Tulia Medina,colombia,169,18/03/1983
+41,Nora Köppel,argentina,175,19/05/1972
+42,Wanda Rijo,dominican republic,170,26/11/1979
+43,Eva Dimas,el salvador,167,18/03/1973
+44,Deborah Lovely,australia,170,20/06/1983
+45,Marie Jesika Dalou,mauritius,163,27/07/1979
+46,Nahla Ramadan,egypt,175,04/04/1985
+47,Huang Shih-chun,taipei,160,30/11/1975
+48,María Isabel Urrutia,colombia,170,25/03/1965
+49,Ruth Ogbeifo,nigeria,161,18/04/1972
+50,Kuo Yi-hang,taipei,166,02/06/1964
+51,Svetlana Khabirova,russia,164,12/03/1978
+52,Cara Heads,usa,160,07/10/1977
+53,Mónica Carrió,spain,170,28/03/1977
+54,Karoliina Lundahl,finland,171,30/06/1968
