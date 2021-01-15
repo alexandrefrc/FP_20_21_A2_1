@@ -82,14 +82,16 @@ complete_info_df = complete_info_df.sort_values(by=['Year','Score', 'Bodyweight'
 print('\nHigher and lowest scores ever.')
 
 highest_score_ever = complete_info_df['Score'].max()
-best_athlete = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Name'].values[0]
-highest_year = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Year'].values[0]
-print('The highest score was {}, got by {} on the {} edition.'.format(highest_score_ever, best_athlete, highest_year))
+best_athlete = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Name'].values
+highest_year = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Year'].values
+highest_year = ', '.join(str(year) for year in highest_year)
+print('The highest score was {}, got by {} on the {} edition.'.format(highest_score_ever, ', '.join(best_athlete), highest_year))
 
 lowest_score_ever = complete_info_df['Score'].min()
-worst_athlete = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Name'].values[0]
-lowest_year = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Year'].values[0]
-print('The lowest score was {}, got by {} on the {} edition.'.format(lowest_score_ever, worst_athlete, lowest_year))
+worst_athlete = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Name'].values
+lowest_year = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Year'].values
+lowest_year = ', '.join(str(year) for year in lowest_year)
+print('The lowest score was {}, got by {} on the {} edition.'.format(lowest_score_ever, ', '.join(worst_athlete), lowest_year))
 
 #Youngest and Oldest winners ever
 print('\nYoungest and Oldest winners ever.')
