@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import extract_scores as es
 
 
-def cal_age(df):
+def calc_age(df):
     time_diff = df['date'] - df['birthdate']
     return time_diff // np.timedelta64(1, 'Y')  
 
@@ -38,7 +38,7 @@ extract_year(sports_events, 2)
 processed_info_df = athletes.merge(
     sports_events, how='right', right_on='athlete_id', left_on='id')
 
-processed_info_df['age'] = processed_info_df.apply(cal_age, axis=1)
+processed_info_df['age'] = processed_info_df.apply(calc_age, axis=1)
 
 processed_info_df = processed_info_df.drop(
     columns=['birthdate', 'date', 'athlete_id', 'height'])
