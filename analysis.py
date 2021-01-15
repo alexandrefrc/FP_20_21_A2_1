@@ -74,7 +74,60 @@ complete_info_df.index = pd.MultiIndex.from_tuples(complete_info_df.index)
 complete_info_df.index.names = ['Athlete ID', 'Year']
 complete_info_df = complete_info_df.reset_index()
 
-complete_info_df = complete_info_df.sort_values(by='Score', ascending=False)
+complete_info_df = complete_info_df.sort_values(by=['Year','Score', 'Bodyweight'], ascending=[False, False, True])
+
+
+
+#Highest and lowest scores ever
+print('\nHigher and lowest scores ever.')
+
+highest_score_ever = complete_info_df['Score'].max()
+best_athlete = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Name'].values[0]
+highest_year = complete_info_df[complete_info_df['Score'] == highest_score_ever]['Year'].values[0]
+print('The highest score was {}, got by {} on the {} edition.'.format(highest_score_ever, best_athlete, highest_year))
+
+lowest_score_ever = complete_info_df['Score'].min()
+worst_athlete = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Name'].values[0]
+lowest_year = complete_info_df[complete_info_df['Score'] == lowest_score_ever]['Year'].values[0]
+print('The lowest score was {}, got by {} on the {} edition.'.format(lowest_score_ever, worst_athlete, lowest_year))
+
+#Youngest and Oldest winners ever
+print('\nYoungest and Oldest winners ever.')
+
+ages_dict = {}
+
+for year in complete_info_df['Year'].unique():
+    winner = complete_info_df[complete_info_df['Year'] == year].head(n=1)
+    winner_age = winner['Age'].values[0]
+    winner_name = winner['Name'].values[0]
+    ages_dict[winner_name] = winner_age
+
+winners_ages = pd.DataFrame.from_dict(ages_dict, orient='index',
+                                     columns=['Age'])
+
+youngest_age = winners_ages['Age'].min()
+y_w = winners_ages[winners_ages['Age'] == youngest_age]
+youngest_winners = list(y_w.index)
+
+if len(youngest_winners) == 1:
+    youngest_winner = ''.join(youngest_winners)
+    print('The youngest winner of all time is {}, being {} years-old.'.format(youngest_winner,youngest_age))
+else:
+    youngest_winners = ', '.join(youngest_winners)
+    print('The youngest winners of all time were {}, being {} years-old.'.format(youngest_winners,youngest_age))
+
+oldest_age = winners_ages['Age'].max()
+o_w = winners_ages[winners_ages['Age'] == oldest_age]
+oldest_winners = list(o_w.index)
+
+if len(oldest_winners) == 1:
+    oldest_winner = ''.join(oldest_winners)
+    print('The oldest winner of all time is {}, being {} years-old.'.format(oldest_winner,oldest_age))
+else:
+    oldest_winners = ', '.join(oldest_winners)
+    print('The oldest winners of all time were {}, being {} years-old.\n'.format(oldest_winners,oldest_age))
+
+
 
 # TABLE 1
 # Tabela razões entre peso levantado e peso do atleta
