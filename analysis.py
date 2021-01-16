@@ -14,7 +14,10 @@ def extract_year(df, n):
 
 
 def calc_ratio(lift, bodyweight):
-    return lift / bodyweight
+    if lift < 0 or bodyweight < 0:
+        return 'Division using a negative number'
+    else:
+        return lift / bodyweight
 
 
 def calc_diff(df, info, column='Year'):
@@ -391,3 +394,30 @@ print('Highest average score: {}'.format(max(score_mean)))
 print('Most common age of participation is {} with {} participants.'.format(
     ages[ages == ages.max()].index[0].astype(int), int(ages.max())))
 plt.show()
+
+
+
+import dataframe_image as dfi
+import seaborn as sns
+import os
+
+image_counter = 0
+def directoryValidator():
+    if os.path.isdir("./images/") == False: #check if directory exists or not - './' == *.py root folder
+        os.makedirs(os.path.dirname("./images/")) #create directory
+    else:
+        pass #if it exists, all good.
+
+def saveImages(category, graph_name, variable): #type of graph, graph name, variable name (para tabelas)
+    global image_counter
+    directoryValidator() #call directory validator
+    image_counter += 1 #increase counter for name
+    if (category) == "graph":
+        (graph_name).savefig("./images/{}_{}.png".format(str(category),str(image_counter))) #save graphs: table_name+number
+    elif (category) == "table":
+        (graph_name).export((variable), "./images/{}_{}.png".format(str(category),str(image_counter))) #save tables: graph_name+number
+    else:
+        print("No valid image Category found.")
+#DFI TABLES:
+saveImages("table",dfi, position_by_ratio_df) #replace summary_sport_events with whatever variable that holds the graph data
+saveImages("table",dfi, failed_lifts_df)
