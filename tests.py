@@ -5,24 +5,30 @@ from analysis import calc_diff, calc_ratio
 class TestCalcDiff(unittest.TestCase):
     
     def test_calc_diff_one_year_diff_scores(self):
-        df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,30,20,10]}
+        df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,30,20,10], 'Bodyweight':[70, 71, 72, 70]}
         df = pd.DataFrame(df_dict)
         self.assertEqual(calc_diff(df,2000),(30,20))
         
     def test_calc_diff_one_year_same_scores(self):
-        df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,40,40,40]}
+        df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,40,40,40], 'Bodyweight':[70, 71, 72, 70]}
         df = pd.DataFrame(df_dict)
         self.assertEqual(calc_diff(df,2000),(0,0))
     
     def test_calc_diff_many_years_diff_scores(self):
-        df_dict = {'Year':[2000,2000,2000,2000,2008,2008], 'Score':[40,30,30,20,35,2]}
+        df_dict = {'Year':[2000,2000,2000,2000,2008,2008], 'Score':[40,30,30,20,35,2], 'Bodyweight':[70, 71, 72, 70, 72, 74]}
         df = pd.DataFrame(df_dict)
         self.assertEqual(calc_diff(df,2000),(20,10))
         
     def test_calc_diff_year_not_present(self):
-        df_dict = {'Year':[2000,2000,2000,2000,2008,2008], 'Score':[40,30,30,20,35,2]}
+        df_dict = {'Year':[2000,2000,2000,2000,2008,2008], 'Score':[40,30,30,20,35,2], 'Bodyweight':[70, 71, 72, 70, 72, 74]}
         df = pd.DataFrame(df_dict)
         self.assertRaises(IndexError,calc_diff,df,2004)
+        
+    def test_calc_same_scores_different_unsorted_bodyweight(self):
+        df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,50,40,10], 'Bodyweight':[70, 74, 72, 70]}
+        df = pd.DataFrame(df_dict)
+        self.assertEqual(calc_diff(df,2000),(40,10))
+        
 
         
 class TestCalcRatio(unittest.TestCase):
