@@ -268,7 +268,7 @@ for pair in [(xs_athletes, ys_athletes), (xs_medalists, ys_medalists)]:
         label = "{:.2f}".format(y)
         plt.annotate(label, (x, y), textcoords="offset points", xytext=(
             0, 10), bbox=dict(boxstyle="round", fc="0.9", ec="gray"), ha='center')
-print('\nAverage Score per Year graph:')
+print('\nAverage Score per Year graph information:')
 plt.show()
 print('Average medalists score in all editions: {}\n'.format(
     round(medalists['Score'].mean(), 3)))
@@ -298,7 +298,7 @@ plt.ylim(0, 180)
 plt.ylabel('Scores')
 plt.xlabel('Year')
 plt.title('Range of Scores')
-print('\nDifference between first and last place and difference between first and third place in each edition graph:')
+print('\nDifference between first and last place and difference between first and third place in each edition graph information:')
 plt.show()
 print('Average difference between first and last place: {}'.format(
     sum(first_last)/len(first_last)))
@@ -368,7 +368,7 @@ ages.plot(secondary_y=True, color='blue')
 plt.ylabel('Number of Athletes')
 plt.ylim(0, ages.max()+1)
 plt.title('Average Scores per Age')
-print('\nAverage Scores per Age graph:')
+print('\nAverage Scores per Age graph information:')
 print('Highest average score: {}'.format(max(score_mean)))
 ages_most_part =  ages[ages == ages.max()].index
 print('Most common age of participation is {} with {} participants.'.format(
