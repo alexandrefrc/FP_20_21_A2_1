@@ -5,32 +5,12 @@ import extract_scores as es
 import dataframe_image as dfi
 import os
 
-
-image_counter = 0
-def directoryValidator():
-    if os.path.isdir("./images/") == False:
-        os.makedirs(os.path.dirname("./images/"))
-    else:
-        pass
-
-
-def saveImages(category, graph_name, variable): 
-    global image_counter
-    directoryValidator() 
-    image_counter += 1
-    if (category) == "table":
-        (graph_name).export((variable), "./images/{}_{}.png".format(str(category),str(image_counter)))
-    else:
-        print("No valid image Category found.")
-
+def extract_year(df, n, column):
+    return df.insert(n, 'year', pd.DatetimeIndex(df[column]).year)
 
 def calc_age(df):
     time_diff = df['date'] - df['birthdate']
     return time_diff // np.timedelta64(1, 'Y')
-
-
-def extract_year(df, n):
-    return df.insert(n, 'year', pd.DatetimeIndex(df['date']).year)
 
 
 def calc_ratio(lift, bodyweight):
@@ -50,6 +30,24 @@ def calc_diff(df, info, column='Year'):
     return diff_frst_lst, diff_frst_thrd
 
 
+image_counter = 0
+def directoryValidator():
+    if os.path.isdir("./images/") == False:
+        os.makedirs(os.path.dirname("./images/"))
+    else:
+        pass
+
+
+def saveImages(category, graph_name, variable): 
+    global image_counter
+    directoryValidator() 
+    image_counter += 1
+    if (category) == "table":
+        (graph_name).export((variable), "./images/{}_{}.png".format(str(category),str(image_counter)))
+    else:
+        print("No valid image Category found.")
+
+
 athletes = pd.read_csv('athletes.csv')
 sports_events = pd.read_csv('sports_events.csv')
 
@@ -59,8 +57,8 @@ athletes = es.ProcessDf(athletes)
 sports_events.process_data()
 sports_events = sports_events.dates('date')
 athletes = athletes.dates('birthdate')
+extract_year(sports_events, 2, 'date')
 
-extract_year(sports_events, 2)
 
 processed_info_df = athletes.merge(
     sports_events, how='right', right_on='athlete_id', left_on='id')
@@ -249,7 +247,7 @@ print('The difference between the oldest and youngest winner ever is {} years.\n
 
 # PLOT 1 - Average score per year for all athletes and medalists.
 
-avg_all_athletes = complete_info_df.groupby('Year').Score.mean().plot(
+avg_all_athletes = complete_info_df.groupby('Year')['Score'].mean().plot(
     xticks=complete_info_df['Year'].unique(), style='o-')
 
 medalists = complete_info_df.groupby('Year').head(n=3)
@@ -373,8 +371,9 @@ plt.ylim(0, ages.max()+1)
 plt.title('Average Scores per Age')
 print('Average Scores per Age graph:')
 print('Highest average score: {}'.format(max(score_mean)))
+ages_most_part =  ages[ages == ages.max()].index
 print('Most common age of participation is {} with {} participants.'.format(
-    ages[ages == ages.max()].index[0].astype(int), int(ages.max())))
+    ', '.join([str(x) for x in ages_most_part]), int(ages.max())))
 plt.show()
 
 

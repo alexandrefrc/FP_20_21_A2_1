@@ -2,7 +2,7 @@ import unittest
 import pandas as pd
 from analysis import calc_diff, calc_ratio
 
-class TestCalcAge(unittest.TestCase):
+class TestCalcDiff(unittest.TestCase):
     
     def test_calc_diff_one_year_diff_scores(self):
         df_dict = {'Year':[2000,2000,2000,2000], 'Score':[40,30,20,10]}
