@@ -1,5 +1,3 @@
-import pandas as pd
-
 class ProcessDf:
     
     def __init__(self, df):
