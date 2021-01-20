@@ -8,6 +8,7 @@ import os
 def extract_year(df, n, column):
     return df.insert(n, 'year', pd.DatetimeIndex(df[column]).year)
 
+
 def calc_age(df):
     time_diff = df['date'] - df['birthdate']
     return time_diff // np.timedelta64(1, 'Y')
@@ -23,7 +24,7 @@ def calc_ratio(lift, bodyweight):
 def calc_diff(df, info, column='Year'):
     first = df[df[column] == info]['Score'].max()
     last = df[df[column] == info]['Score'].min()
-    third_info = df[df[column] == info].sort_values('Score', ascending=False)
+    third_info = df[df[column] == info].sort_values(['Score', 'Bodyweight'], ascending=[False, True])
     third = third_info['Score'].iloc[2]
     diff_frst_lst = first - last
     diff_frst_thrd = first - third
@@ -144,7 +145,7 @@ medalists = complete_info_df.groupby('Year').head(n=3)
 
 all_medalists = {}
 for year in medalists['Year'].unique():
-    year_medalists = medalists[medalists['Year'] == year].head(n=3)
+    year_medalists = medalists[medalists['Year'] == year]
     for i in range(len(year_medalists)):
         if year_medalists.iloc[i, 2] in all_medalists:
             all_medalists[year_medalists.iloc[i, 2]
@@ -157,12 +158,14 @@ n_multiple_medal = 0
 for n_medals in all_medalists.values():
     if n_medals > 1:
         n_multiple_medal += 1
-
+print('\n\nAthletes that won more than one medal:')
 if n_multiple_medal > 1:
-    print('\nThere are {} athletes that won more that one medal:'.format(
+    print('There are {} athletes that won more that one medal:'.format(
         n_multiple_medal))
-if n_multiple_medal == 1:
-    print('\nThere is one athlete that won more that one medal:')
+elif n_multiple_medal == 1:
+    print('There is one athlete that won more that one medal:')
+else:
+    print('There never was an athlete that won more than one medal')
 
 for medalist in all_medalists:
     if all_medalists[medalist] > 1:
@@ -186,7 +189,6 @@ n_disqualified = {}
 for key, group in processed_info_df.groupby('year'):
     n = 0
     for athlete in group['id'].unique():
-        #print(group[group['id'] == athlete]['qualified'])
         if False in group[group['id'] == athlete]['qualified'].unique():
             n += 1
     n_disqualified[group['year'].values[0]] = n
@@ -194,11 +196,11 @@ for key, group in processed_info_df.groupby('year'):
 n_disqualified_df = pd.DataFrame.from_dict(
     n_disqualified, orient='index', columns=['n_disqualified'])
 
+print('\n\nDisqualified athletes:')
 if n_disqualified_df['n_disqualified'].min() == 0:
-    print("\n{} didn't have any disqualified athletes.".format(', '.join(str(x)
-                                                                         for x in n_disqualified_df[n_disqualified_df['n_disqualified'] == n_disqualified_df['n_disqualified'].min()].index)))
+    print("{} didn't have any disqualified athletes.".format(', '.join(str(x) for x in n_disqualified_df[n_disqualified_df['n_disqualified'] == n_disqualified_df['n_disqualified'].min()].index)))
 else:
-    print("\nAll editions have disqualified athletes.")
+    print("All editions have disqualified athletes.")
 
 print('The maximum number of disqualified athletes was {} in {}.'.format(n_disqualified_df['n_disqualified'].max(), ', '.join(
     str(x) for x in n_disqualified_df[n_disqualified_df['n_disqualified'] == n_disqualified_df['n_disqualified'].max()].index)))
@@ -207,40 +209,37 @@ print('The average number of disqualified athletes is {}.'.format(
 
 
 # Youngest and Oldest winners ever
-print('\nYoungest and Oldest winners ever:')
+print('\n\nYoungest and Oldest winners ever:')
 
 ages_dict = {}
 
 for year in complete_info_df['Year'].unique():
     winner = complete_info_df[complete_info_df['Year'] == year].head(n=1)
     winner_age = winner['Age'].values[0]
-    winner_name = winner['Name'].values[0]
-    ages_dict[winner_name] = winner_age
+    ages_dict[year] = winner_age
 
 winners_ages = pd.DataFrame.from_dict(ages_dict, orient='index',
                                       columns=['Age'])
 
 youngest_age = winners_ages['Age'].min()
 y_w = winners_ages[winners_ages['Age'] == youngest_age]
-youngest_winners = list(y_w.index)
+youngest_winners_year = list(y_w.index)
+youngest_winners = [complete_info_df[complete_info_df['Year'] == x].head(n=1)['Name'].values[0] for x in youngest_winners_year]
 
-if len(youngest_winners) == 1:
-    youngest_winner = ''.join(youngest_winners)
-    print('The youngest winner of all time is {}, being {} years-old.'.format(youngest_winner, youngest_age))
+if len(youngest_winners_year) == 1:
+    print('The youngest winner of all time is {}, being {} years-old.'.format(''.join(youngest_winners[0]), youngest_age))
 else:
-    youngest_winners = ', '.join(youngest_winners)
-    print('The youngest winners of all time were {}, being {} years-old.'.format(youngest_winners, youngest_age))
+    print('The youngest winners of all time were {}, being {} years-old.'.format(', '.join(youngest_winners), youngest_age))
 
 oldest_age = winners_ages['Age'].max()
 o_w = winners_ages[winners_ages['Age'] == oldest_age]
-oldest_winners = list(o_w.index)
+oldest_winners_year = list(o_w.index)
+oldest_winners = [complete_info_df[complete_info_df['Year'] == x].head(n=1)['Name'].values[0] for x in oldest_winners_year]
 
-if len(oldest_winners) == 1:
-    oldest_winner = ''.join(oldest_winners)
-    print('The oldest winner of all time is {}, being {} years-old.'.format(oldest_winner, oldest_age))
+if len(oldest_winners_year) == 1:
+    print('The oldest winner of all time is {}, being {} years-old.'.format(''.join(oldest_winners[0]), oldest_age))
 else:
-    oldest_winners = ', '.join(oldest_winners)
-    print('The oldest winners of all time were {}, being {} years-old.'.format(oldest_winners, oldest_age))
+    print('The oldest winners of all time were {}, being {} years-old.'.format(', '.join(oldest_winners), oldest_age))
 
 print('The difference between the oldest and youngest winner ever is {} years.\n'.format(oldest_age-youngest_age))
 
@@ -250,7 +249,7 @@ print('The difference between the oldest and youngest winner ever is {} years.\n
 avg_all_athletes = complete_info_df.groupby('Year')['Score'].mean().plot(
     xticks=complete_info_df['Year'].unique(), style='o-')
 
-medalists = complete_info_df.groupby('Year').head(n=3)
+
 medalists.groupby('Year')['Score'].mean().plot(
     xticks=complete_info_df['Year'].unique(), ax=avg_all_athletes, style='o-')
 avg_all_athletes.legend(['All Athletes', 'Medalists'], loc='upper center')
@@ -334,7 +333,7 @@ for index, year_results in complete_info_df.groupby('Year'):
 position_by_ratio_df = position_by_ratio_df.set_index(['Year', 'Athlete ID'])
 pd.set_option('display.max_columns', 12)
 
-print('Weight lifted vs. Bodyweight ratio.\nNew positions are based on the average ratio of Snatch and Clean and Jerk:\n')
+print('\n\nWeight lifted vs. Bodyweight ratio.\nNew positions are based on the average ratio of Snatch and Clean and Jerk:\n')
 print(position_by_ratio_df)
 print('All time highest average ratio: {}'.format(
     round(position_by_ratio_df['Average Ratio'].max(), 3)))
@@ -369,7 +368,7 @@ ages.plot(secondary_y=True, color='blue')
 plt.ylabel('Number of Athletes')
 plt.ylim(0, ages.max()+1)
 plt.title('Average Scores per Age')
-print('Average Scores per Age graph:')
+print('\nAverage Scores per Age graph:')
 print('Highest average score: {}'.format(max(score_mean)))
 ages_most_part =  ages[ages == ages.max()].index
 print('Most common age of participation is {} with {} participants.'.format(
@@ -412,7 +411,7 @@ failed_lifts_df.index.name = 'Year'
 failed_lifts_df.columns = pd.MultiIndex.from_tuples(list(zip(
     ['Average All Athletes', 'Average All Athletes', 'Average All Athletes', 'Winner', 'Winner', 'Winner'], failed_lifts_df.columns)))
 
-print("\nAverage invalid lifts per lift type in each year and winner's invalid lifts:\n")
+print("\n\nAverage invalid lifts per lift type in each year and winner's invalid lifts:\n")
 print(failed_lifts_df)
 print('\nAverage failed Snatch lifts: {}'.format(
     round(failed_lifts_df['Average All Athletes', 'Failed Snatch'].mean(), 3)))
@@ -420,7 +419,7 @@ print('Average failed Clean and Jerk lifts: {}'.format(round(
     failed_lifts_df['Average All Athletes', 'Failed Clean and Jerk'].mean(), 3)))
 print('Average failed lifts: {}'.format(
     round(failed_lifts_df['Average All Athletes', 'Overall Failed'].mean(), 3)))
-print('\n{} has the lowest average of failed lifts: {}'.format(failed_lifts_df[failed_lifts_df['Average All Athletes', 'Overall Failed'] == failed_lifts_df[
+print('{} has the lowest average of failed lifts: {}'.format(failed_lifts_df[failed_lifts_df['Average All Athletes', 'Overall Failed'] == failed_lifts_df[
       'Average All Athletes', 'Overall Failed'].min()].index[0].astype(int), round(failed_lifts_df['Average All Athletes', 'Overall Failed'].min(), 3)))
 print('{} has the highest average of failed lifts: {}\n'.format(failed_lifts_df[failed_lifts_df['Average All Athletes', 'Overall Failed'] == failed_lifts_df[
       'Average All Athletes', 'Overall Failed'].max()].index[0].astype(int), round(failed_lifts_df['Average All Athletes', 'Overall Failed'].max(), 3)))
